@@ -1,0 +1,1733 @@
+{
+	"info": {
+		"_postman_id": "2e65af62-9646-4102-9671-e235b8fa74cc",
+		"name": "QA Challenge API Test Collection",
+		"description": "Testing for the provided c# endpoint, by Nicolás Sira",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29859969"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login - Valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Login successful\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response contains a token\", function () {",
+									"    const res = pm.response.json();",
+									"",
+									"    // Check if token exists and is a non-empty string",
+									"    pm.expect(res).to.have.property(\"token\");",
+									"    pm.expect(res.token).to.be.a(\"string\").and.to.not.be.empty;",
+									"});",
+									"",
+									"// Optional: Check token structure (JWT usually has 3 parts separated by dots)",
+									"pm.test(\"Token appears to be a valid JWT\", function () {",
+									"    const res = pm.response.json();",
+									"    if (res.token) {",
+									"        pm.expect(res.token.split('.')).to.have.length(3);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/User/login",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Invalid Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401 or 403\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([401, 403]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"wrongpass\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/User/login",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Invalid Username",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401 or 403\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([401, 403]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"wronguser\",\n  \"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/User/login",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Missing Fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_URL}}/api/User/login",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Get Product by ID - Before Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return 404 for non-existent resource\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_URL}}/api/Product/1",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product - Valid ID 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"name\": \"New Product\",\n  \"price\": 9.99\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Product",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product - Duplicate ID 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return error for duplicate ID\", function () {",
+									"    pm.expect(pm.response.code).to.not.equal(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"name\": \"New Product\",\n  \"price\": 9.99\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Product",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product - Invalid Negative ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check for 400 Bad Request or similar error code",
+									"pm.test(\"Status code is client error for invalid ID\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 422]);",
+									"});",
+									"",
+									"// Parse response body",
+									"let response = {};",
+									"try {",
+									"    response = pm.response.json();",
+									"} catch (e) {",
+									"    console.warn(\"Response is not JSON\");",
+									"}",
+									"",
+									"// Optional: Check for specific error message",
+									"pm.test(\"Response should mention invalid or missing ID\", function () {",
+									"    const errorMsg = JSON.stringify(response).toLowerCase();",
+									"    pm.expect(errorMsg).to.include(\"id\");",
+									"    pm.expect(errorMsg).to.match(/invalid|must be|greater than/i);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": -1,\n  \"name\": \"Negative ID product\",\n  \"price\": 9.99\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Product",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product - Invalid 0 ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check for 400 Bad Request or similar error code",
+									"pm.test(\"Status code is client error for invalid ID\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 422]);",
+									"});",
+									"",
+									"// Parse response body",
+									"let response = {};",
+									"try {",
+									"    response = pm.response.json();",
+									"} catch (e) {",
+									"    console.warn(\"Response is not JSON\");",
+									"}",
+									"",
+									"// Optional: Check for specific error message",
+									"pm.test(\"Response should mention invalid or missing ID\", function () {",
+									"    const errorMsg = JSON.stringify(response).toLowerCase();",
+									"    pm.expect(errorMsg).to.include(\"id\");",
+									"    pm.expect(errorMsg).to.match(/invalid|must be|greater than/i);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 0,\n  \"name\": \"0 ID product\",\n  \"price\": 9.99\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Product",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product - Invalid price as string",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verifica que el código de estado sea de error del cliente",
+									"pm.test(\"Status code is client error for string as price\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 422]);",
+									"});",
+									"",
+									"// Intenta analizar la respuesta como JSON",
+									"let response = {};",
+									"try {",
+									"    response = pm.response.json();",
+									"} catch (e) {",
+									"    console.warn(\"La respuesta no es JSON.\");",
+									"}",
+									"",
+									"// Verifica que el mensaje de error mencione el campo 'price'",
+									"pm.test(\"Response should mention invalid price type\", function () {",
+									"    const errorMsg = JSON.stringify(response).toLowerCase();",
+									"    pm.expect(errorMsg).to.include(\"price\");",
+									"    pm.expect(errorMsg).to.match(/invalid|must be|number|not allowed/i);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 3,\n  \"name\": \"String priced product\",\n  \"price\": \"precio de mil\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Product",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_URL}}/api/Product",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product by ID - Valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_URL}}/api/Product/1",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product by ID - Invalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return 404 or error for non-existent Product ID\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_URL}}/api/Product/99999",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"99999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product - Missing Fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"price\": 9.99\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Product",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product - Missing all fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Product",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product - Valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"name\": \"Updated Product\",\n  \"price\": 19.99\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Product/1",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product - Invalid Update ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Expecting the API to reject an attempt to change the ID",
+									"pm.test(\"Status code should be 400 or 422 if ID is being changed\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 422]);",
+									"});",
+									"",
+									"let res = {};",
+									"try {",
+									"    res = pm.response.json();",
+									"} catch (e) {",
+									"    console.warn(\"No se pudo parsear la respuesta como JSON.\");",
+									"}",
+									"",
+									"// Ensure the error message mentions the ID field or constraint",
+									"pm.test(\"Error message should mention ID is immutable or cannot be changed\", function () {",
+									"    const msg = JSON.stringify(res).toLowerCase();",
+									"    pm.expect(msg).to.match(/id.*(immutable|not allowed|cannot|readonly)/);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 100\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Product/1",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product - Update price to string",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return 400 or 422 when 'price' is a string\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 422]);",
+									"});",
+									"",
+									"let json = {};",
+									"try {",
+									"    json = pm.response.json();",
+									"} catch (e) {",
+									"    console.warn(\"Response is not valid JSON\");",
+									"}",
+									"",
+									"pm.test(\"Error message should mention 'price' and invalid type\", function () {",
+									"    const msg = JSON.stringify(json).toLowerCase();",
+									"    pm.expect(msg).to.match(/price.*(invalid|type|must|number|string)/);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"name\": \"Updated Product\",\n  \"price\": \"String Price\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Product/1",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product - Invalid ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return 404 for non-existent resource\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 99999,\n  \"name\": \"Updated Product\",\n  \"price\": 19.99\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Product/99999",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"99999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product - Valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_URL}}/api/Product/1",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product - Invalid ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return 404 for non-existent resource\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_URL}}/api/Product/99999",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"99999"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Get Order by ID - Before Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return 404 for non-existent resource\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_URL}}/api/Order/1",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order - Valid ID 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"productName\": \"Test Product\",\n  \"quantity\": 2,\n  \"status\": \"Pending\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Order",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order - Duplicate ID 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return error for duplicate ID\", function () {",
+									"    pm.expect(pm.response.code).to.not.equal(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"productName\": \"Test Product\",\n  \"quantity\": 2,\n  \"status\": \"Pending\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Order",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order - Invalid Negative ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check for 400 Bad Request or similar error code",
+									"pm.test(\"Status code is client error for invalid ID\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 422]);",
+									"});",
+									"",
+									"// Parse response body",
+									"let response = {};",
+									"try {",
+									"    response = pm.response.json();",
+									"} catch (e) {",
+									"    console.warn(\"Response is not JSON\");",
+									"}",
+									"",
+									"// Optional: Check for specific error message",
+									"pm.test(\"Response should mention invalid or missing ID\", function () {",
+									"    const errorMsg = JSON.stringify(response).toLowerCase();",
+									"    pm.expect(errorMsg).to.include(\"id\");",
+									"    pm.expect(errorMsg).to.match(/invalid|must be|greater than/i);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": -1,\n  \"productName\": \"Test Product\",\n  \"quantity\": 2,\n  \"status\": \"Pending\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Order",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order - Invalid ID 0",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check for 400 Bad Request or similar error code",
+									"pm.test(\"Status code is client error for invalid ID\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 422]);",
+									"});",
+									"",
+									"// Parse response body",
+									"let response = {};",
+									"try {",
+									"    response = pm.response.json();",
+									"} catch (e) {",
+									"    console.warn(\"Response is not JSON\");",
+									"}",
+									"",
+									"// Optional: Check for specific error message",
+									"pm.test(\"Response should mention invalid or missing ID\", function () {",
+									"    const errorMsg = JSON.stringify(response).toLowerCase();",
+									"    pm.expect(errorMsg).to.include(\"id\");",
+									"    pm.expect(errorMsg).to.match(/invalid|must be|greater than/i);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 0,\n  \"productName\": \"Test Product\",\n  \"quantity\": 2,\n  \"status\": \"Pending\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Order",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order - Invalid Quantity as string",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return 400 or 422 when 'quantity' is a string\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 422]);",
+									"});",
+									"",
+									"let json = {};",
+									"try {",
+									"    json = pm.response.json();",
+									"} catch (e) {",
+									"    console.warn(\"Response is not valid JSON\");",
+									"}",
+									"",
+									"pm.test(\"Error message should mention 'quantity' and invalid type\", function () {",
+									"    const msg = JSON.stringify(json).toLowerCase();",
+									"    pm.expect(msg).to.match(/quantity.*(invalid|type|must|number|string)/);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"productName\": \"Test Product\",\n  \"quantity\": \"two\",\n  \"status\": \"Pending\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Order",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_URL}}/api/Order",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order by ID - Valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_URL}}/api/Order/1",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order by ID - Invalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return 404 or error for non-existent order ID\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_URL}}/api/Order/9999999",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order",
+								"9999999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order - Missing Fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"quantity\": 2\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Order",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order - Missing all Fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Order",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order - Valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"productName\": \"Updated\",\n  \"quantity\": 5,\n  \"status\": \"Shipped\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Order/1",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order - Invalid update ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Expecting the API to reject an attempt to change the ID",
+									"pm.test(\"Status code should be 400 or 422 if ID is being changed\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 422]);",
+									"});",
+									"",
+									"let res = {};",
+									"try {",
+									"    res = pm.response.json();",
+									"} catch (e) {",
+									"    console.warn(\"No se pudo parsear la respuesta como JSON.\");",
+									"}",
+									"",
+									"// Ensure the error message mentions the ID field or constraint",
+									"pm.test(\"Error message should mention ID is immutable or cannot be changed\", function () {",
+									"    const msg = JSON.stringify(res).toLowerCase();",
+									"    pm.expect(msg).to.match(/id.*(immutable|not allowed|cannot|readonly)/);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 101\n  \n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Order/1",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order - Invalid quantity to string",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return 400 or 422 when updating 'quantity' as a string\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 422]);",
+									"});",
+									"",
+									"let json = {};",
+									"try {",
+									"    json = pm.response.json();",
+									"} catch (e) {",
+									"    console.warn(\"Response is not valid JSON\");",
+									"}",
+									"",
+									"pm.test(\"Response should mention 'quantity' and invalid type\", function () {",
+									"    const msg = JSON.stringify(json).toLowerCase();",
+									"    pm.expect(msg).to.match(/quantity.*(invalid|type|must|number|string)/);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 99999,\n  \"productName\": \"Updated\",\n  \"quantity\": \"Five\",\n  \"status\": \"Shipped\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Order/1",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order - Invalid ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return 404 for non-existent resource\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 99999,\n  \"productName\": \"Updated\",\n  \"quantity\": 5,\n  \"status\": \"Shipped\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}/api/Order/99999",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order",
+								"99999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order - Valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_URL}}/api/Order/1",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order - Invalid ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return 404 for non-existent resource\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_URL}}/api/Order/99999",
+							"host": [
+								"{{base_URL}}"
+							],
+							"path": [
+								"api",
+								"Order",
+								"99999"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_URL",
+			"value": "localhost:5044",
+			"type": "default"
+		}
+	]
+}

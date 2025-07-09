@@ -1,0 +1,1272 @@
+{
+	"id": "dfa24c62-7b6b-4f72-9908-a59dbc01b93e",
+	"name": "QA Challenge API Test Collection",
+	"timestamp": "2025-07-08T23:19:18.728Z",
+	"collection_id": "29859969-2e65af62-9646-4102-9671-e235b8fa74cc",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 29,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-07-08T23:19:16.144Z",
+	"totalFail": 21,
+	"results": [
+		{
+			"id": "7f217430-96b1-4786-ad76-1aa2d1a3815c",
+			"name": "Login - Valid",
+			"url": "localhost:5044/api/User/login",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Login successful": true,
+				"Response contains a token": true,
+				"Token appears to be a valid JWT": false
+			},
+			"testPassFailCounts": {
+				"Login successful": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains a token": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Token appears to be a valid JWT": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Login successful": true,
+					"Response contains a token": true,
+					"Token appears to be a valid JWT": false
+				}
+			]
+		},
+		{
+			"id": "c6bb7f6e-dbdd-43ed-bff0-07578a219873",
+			"name": "Login - Invalid Password",
+			"url": "localhost:5044/api/User/login",
+			"time": 3,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401 or 403": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401 or 403": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status code is 401 or 403": true
+				}
+			]
+		},
+		{
+			"id": "bab8460c-8f4d-4dab-a158-1c6c493179f6",
+			"name": "Login - Invalid Username",
+			"url": "localhost:5044/api/User/login",
+			"time": 3,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401 or 403": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401 or 403": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status code is 401 or 403": true
+				}
+			]
+		},
+		{
+			"id": "8cd55b44-2e3a-4f83-9a32-0f139e7368f3",
+			"name": "Login - Missing Fields",
+			"url": "localhost:5044/api/User/login",
+			"time": 2,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "7ccd9533-7a08-479a-bc3d-877c47c3ced5",
+			"name": "Get Product by ID - Before Create",
+			"url": "localhost:5044/api/Product/1",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Should return 404 for non-existent resource": false
+			},
+			"testPassFailCounts": {
+				"Should return 404 for non-existent resource": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Should return 404 for non-existent resource": false
+				}
+			]
+		},
+		{
+			"id": "d914de52-848d-4d7d-a6f9-f1078145986d",
+			"name": "Create Product - Valid ID 1",
+			"url": "localhost:5044/api/Product",
+			"time": 3,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status code is 201": true
+				}
+			]
+		},
+		{
+			"id": "2fab840f-735d-4fe1-986f-a81886495162",
+			"name": "Create Product - Duplicate ID 1",
+			"url": "localhost:5044/api/Product",
+			"time": 2,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Should return error for duplicate ID": false
+			},
+			"testPassFailCounts": {
+				"Should return error for duplicate ID": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Should return error for duplicate ID": false
+				}
+			]
+		},
+		{
+			"id": "ecca4781-12a8-4fcf-8378-01bc27896bf3",
+			"name": "Create Product - Invalid Negative ID",
+			"url": "localhost:5044/api/Product",
+			"time": 2,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is client error for invalid ID": false,
+				"Response should mention invalid or missing ID": false
+			},
+			"testPassFailCounts": {
+				"Status code is client error for invalid ID": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response should mention invalid or missing ID": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code is client error for invalid ID": false,
+					"Response should mention invalid or missing ID": false
+				}
+			]
+		},
+		{
+			"id": "455058dd-85fe-4355-ab45-fd618b88ef54",
+			"name": "Create Product - Invalid 0 ID",
+			"url": "localhost:5044/api/Product",
+			"time": 2,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is client error for invalid ID": false,
+				"Response should mention invalid or missing ID": false
+			},
+			"testPassFailCounts": {
+				"Status code is client error for invalid ID": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response should mention invalid or missing ID": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code is client error for invalid ID": false,
+					"Response should mention invalid or missing ID": false
+				}
+			]
+		},
+		{
+			"id": "516df675-0151-409c-a064-96de84caa741",
+			"name": "Create Product - Invalid price as string",
+			"url": "localhost:5044/api/Product",
+			"time": 3,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is client error for string as price": true,
+				"Response should mention invalid price type": true
+			},
+			"testPassFailCounts": {
+				"Status code is client error for string as price": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response should mention invalid price type": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status code is client error for string as price": true,
+					"Response should mention invalid price type": true
+				}
+			]
+		},
+		{
+			"id": "dbfbd954-7f39-4739-a552-8627b1be09c6",
+			"name": "Get All Products",
+			"url": "localhost:5044/api/Product",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "a2645a79-f9bb-4555-9694-f7fbdc2db57d",
+			"name": "Get Product by ID - Valid",
+			"url": "localhost:5044/api/Product/1",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "f7a1c021-a717-40ca-8b6b-8d927f4c86ae",
+			"name": "Get Product by ID - Invalid",
+			"url": "localhost:5044/api/Product/99999",
+			"time": 2,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Should return 404 or error for non-existent Product ID": true
+			},
+			"testPassFailCounts": {
+				"Should return 404 or error for non-existent Product ID": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Should return 404 or error for non-existent Product ID": true
+				}
+			]
+		},
+		{
+			"id": "1fa44325-0a83-4463-90d8-e4054e80e5c1",
+			"name": "Create Product - Missing Fields",
+			"url": "localhost:5044/api/Product",
+			"time": 2,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 400": false
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code is 400": false
+				}
+			]
+		},
+		{
+			"id": "04ca7ba1-81cb-484b-b62d-06348f039b61",
+			"name": "Create Product - Missing all fields",
+			"url": "localhost:5044/api/Product",
+			"time": 2,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "b9dcbb74-6277-49e5-b94c-345e9b29ce57",
+			"name": "Update Product - Valid",
+			"url": "localhost:5044/api/Product/1",
+			"time": 2,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			]
+		},
+		{
+			"id": "610bd7ab-d8bd-473a-88cd-53131e187d34",
+			"name": "Update Product - Invalid Update ID",
+			"url": "localhost:5044/api/Product/1",
+			"time": 2,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Status code should be 400 or 422 if ID is being changed": false,
+				"Error message should mention ID is immutable or cannot be changed": false
+			},
+			"testPassFailCounts": {
+				"Status code should be 400 or 422 if ID is being changed": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Error message should mention ID is immutable or cannot be changed": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code should be 400 or 422 if ID is being changed": false,
+					"Error message should mention ID is immutable or cannot be changed": false
+				}
+			]
+		},
+		{
+			"id": "18e86218-aac8-450f-9c36-1ea7a88fa287",
+			"name": "Update Product - Update price to string",
+			"url": "localhost:5044/api/Product/1",
+			"time": 2,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Should return 400 or 422 when 'price' is a string": true,
+				"Error message should mention 'price' and invalid type": true
+			},
+			"testPassFailCounts": {
+				"Should return 400 or 422 when 'price' is a string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error message should mention 'price' and invalid type": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Should return 400 or 422 when 'price' is a string": true,
+					"Error message should mention 'price' and invalid type": true
+				}
+			]
+		},
+		{
+			"id": "9c4ba430-c08d-46f8-a253-1813d04a4b98",
+			"name": "Update Product - Invalid ID",
+			"url": "localhost:5044/api/Product/99999",
+			"time": 2,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Should return 404 for non-existent resource": true
+			},
+			"testPassFailCounts": {
+				"Should return 404 for non-existent resource": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Should return 404 for non-existent resource": true
+				}
+			]
+		},
+		{
+			"id": "2ea4b780-d289-4d98-ad95-a32e6320f148",
+			"name": "Delete Product - Valid",
+			"url": "localhost:5044/api/Product/1",
+			"time": 2,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "af962e10-ee43-48a5-aab4-ec858f0446a1",
+			"name": "Delete Product - Invalid ID",
+			"url": "localhost:5044/api/Product/99999",
+			"time": 2,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Should return 404 for non-existent resource": true
+			},
+			"testPassFailCounts": {
+				"Should return 404 for non-existent resource": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Should return 404 for non-existent resource": true
+				}
+			]
+		},
+		{
+			"id": "066f3739-4327-48ec-b87c-38f5df30b339",
+			"name": "Get Order by ID - Before Create",
+			"url": "localhost:5044/api/Order/1",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Should return 404 for non-existent resource": false
+			},
+			"testPassFailCounts": {
+				"Should return 404 for non-existent resource": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Should return 404 for non-existent resource": false
+				}
+			]
+		},
+		{
+			"id": "6a870469-c8df-498f-b664-2700b606b310",
+			"name": "Create Order - Valid ID 1",
+			"url": "localhost:5044/api/Order",
+			"time": 2,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code is 201": true
+				}
+			]
+		},
+		{
+			"id": "d9ef0f2f-5462-4aab-9e77-bdfc44ab5eba",
+			"name": "Create Order - Duplicate ID 1",
+			"url": "localhost:5044/api/Order",
+			"time": 2,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Should return error for duplicate ID": false
+			},
+			"testPassFailCounts": {
+				"Should return error for duplicate ID": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Should return error for duplicate ID": false
+				}
+			]
+		},
+		{
+			"id": "4017d1fc-55ff-46d9-aa05-8d1c0b216b89",
+			"name": "Create Order - Invalid Negative ID",
+			"url": "localhost:5044/api/Order",
+			"time": 2,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is client error for invalid ID": false,
+				"Response should mention invalid or missing ID": false
+			},
+			"testPassFailCounts": {
+				"Status code is client error for invalid ID": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response should mention invalid or missing ID": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code is client error for invalid ID": false,
+					"Response should mention invalid or missing ID": false
+				}
+			]
+		},
+		{
+			"id": "6c35958e-495f-4d6e-a0ec-8e4e398ff0a1",
+			"name": "Create Order - Invalid ID 0",
+			"url": "localhost:5044/api/Order",
+			"time": 2,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is client error for invalid ID": false,
+				"Response should mention invalid or missing ID": false
+			},
+			"testPassFailCounts": {
+				"Status code is client error for invalid ID": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response should mention invalid or missing ID": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code is client error for invalid ID": false,
+					"Response should mention invalid or missing ID": false
+				}
+			]
+		},
+		{
+			"id": "f0c41a6a-5abb-430d-8a19-b68afe4777a1",
+			"name": "Create Order - Invalid Quantity as string",
+			"url": "localhost:5044/api/Order",
+			"time": 2,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Should return 400 or 422 when 'quantity' is a string": true,
+				"Error message should mention 'quantity' and invalid type": true
+			},
+			"testPassFailCounts": {
+				"Should return 400 or 422 when 'quantity' is a string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error message should mention 'quantity' and invalid type": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Should return 400 or 422 when 'quantity' is a string": true,
+					"Error message should mention 'quantity' and invalid type": true
+				}
+			]
+		},
+		{
+			"id": "edcd16eb-8d78-46f8-8ce3-8fa0370f71e7",
+			"name": "Get All Orders",
+			"url": "localhost:5044/api/Order",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "a719c595-7013-4a43-bc15-9ed3bdb2ce5b",
+			"name": "Get Order by ID - Valid",
+			"url": "localhost:5044/api/Order/1",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "9d704189-359d-492e-bac3-fb8f1d351ece",
+			"name": "Get Order by ID - Invalid",
+			"url": "localhost:5044/api/Order/9999999",
+			"time": 4,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Should return 404 or error for non-existent order ID": true
+			},
+			"testPassFailCounts": {
+				"Should return 404 or error for non-existent order ID": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Should return 404 or error for non-existent order ID": true
+				}
+			]
+		},
+		{
+			"id": "f843218a-20fb-45fe-8be2-b0437b792319",
+			"name": "Create Order - Missing Fields",
+			"url": "localhost:5044/api/Order",
+			"time": 4,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 400": false
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status code is 400": false
+				}
+			]
+		},
+		{
+			"id": "2e45d128-509c-49b3-b35f-196f3c02c219",
+			"name": "Create Order - Missing all Fields",
+			"url": "localhost:5044/api/Order",
+			"time": 3,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "890d274c-111a-4ff3-9942-b15f7cc2d745",
+			"name": "Update Order - Valid",
+			"url": "localhost:5044/api/Order/1",
+			"time": 1,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				1
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			]
+		},
+		{
+			"id": "bef448dc-7953-4ae1-a328-823e4f2542e3",
+			"name": "Update Order - Invalid update ID",
+			"url": "localhost:5044/api/Order/1",
+			"time": 2,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Status code should be 400 or 422 if ID is being changed": false,
+				"Error message should mention ID is immutable or cannot be changed": false
+			},
+			"testPassFailCounts": {
+				"Status code should be 400 or 422 if ID is being changed": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Error message should mention ID is immutable or cannot be changed": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status code should be 400 or 422 if ID is being changed": false,
+					"Error message should mention ID is immutable or cannot be changed": false
+				}
+			]
+		},
+		{
+			"id": "546a623f-d0de-49f1-8c9f-1260814387fc",
+			"name": "Update Order - Invalid quantity to string",
+			"url": "localhost:5044/api/Order/1",
+			"time": 2,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Should return 400 or 422 when updating 'quantity' as a string": true,
+				"Response should mention 'quantity' and invalid type": true
+			},
+			"testPassFailCounts": {
+				"Should return 400 or 422 when updating 'quantity' as a string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response should mention 'quantity' and invalid type": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Should return 400 or 422 when updating 'quantity' as a string": true,
+					"Response should mention 'quantity' and invalid type": true
+				}
+			]
+		},
+		{
+			"id": "7c0e2ea4-86da-41c7-9eaf-630a05547f1a",
+			"name": "Update Order - Invalid ID",
+			"url": "localhost:5044/api/Order/99999",
+			"time": 2,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Should return 404 for non-existent resource": true
+			},
+			"testPassFailCounts": {
+				"Should return 404 for non-existent resource": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Should return 404 for non-existent resource": true
+				}
+			]
+		},
+		{
+			"id": "b322ef77-6027-443f-815d-ed8c8517c671",
+			"name": "Delete Order - Valid",
+			"url": "localhost:5044/api/Order/1",
+			"time": 3,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "a5d2e804-0374-4031-a95a-02bb6f66d4f6",
+			"name": "Delete Order - Invalid ID",
+			"url": "localhost:5044/api/Order/99999",
+			"time": 3,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Should return 404 for non-existent resource": true
+			},
+			"testPassFailCounts": {
+				"Should return 404 for non-existent resource": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Should return 404 for non-existent resource": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 88,
+	"collection": {
+		"requests": [
+			{
+				"id": "7f217430-96b1-4786-ad76-1aa2d1a3815c",
+				"method": "POST"
+			},
+			{
+				"id": "c6bb7f6e-dbdd-43ed-bff0-07578a219873",
+				"method": "POST"
+			},
+			{
+				"id": "bab8460c-8f4d-4dab-a158-1c6c493179f6",
+				"method": "POST"
+			},
+			{
+				"id": "8cd55b44-2e3a-4f83-9a32-0f139e7368f3",
+				"method": "POST"
+			},
+			{
+				"id": "7ccd9533-7a08-479a-bc3d-877c47c3ced5",
+				"method": "GET"
+			},
+			{
+				"id": "d914de52-848d-4d7d-a6f9-f1078145986d",
+				"method": "POST"
+			},
+			{
+				"id": "2fab840f-735d-4fe1-986f-a81886495162",
+				"method": "POST"
+			},
+			{
+				"id": "ecca4781-12a8-4fcf-8378-01bc27896bf3",
+				"method": "POST"
+			},
+			{
+				"id": "455058dd-85fe-4355-ab45-fd618b88ef54",
+				"method": "POST"
+			},
+			{
+				"id": "516df675-0151-409c-a064-96de84caa741",
+				"method": "POST"
+			},
+			{
+				"id": "dbfbd954-7f39-4739-a552-8627b1be09c6",
+				"method": "GET"
+			},
+			{
+				"id": "a2645a79-f9bb-4555-9694-f7fbdc2db57d",
+				"method": "GET"
+			},
+			{
+				"id": "f7a1c021-a717-40ca-8b6b-8d927f4c86ae",
+				"method": "GET"
+			},
+			{
+				"id": "1fa44325-0a83-4463-90d8-e4054e80e5c1",
+				"method": "POST"
+			},
+			{
+				"id": "04ca7ba1-81cb-484b-b62d-06348f039b61",
+				"method": "POST"
+			},
+			{
+				"id": "b9dcbb74-6277-49e5-b94c-345e9b29ce57",
+				"method": "PUT"
+			},
+			{
+				"id": "610bd7ab-d8bd-473a-88cd-53131e187d34",
+				"method": "PUT"
+			},
+			{
+				"id": "18e86218-aac8-450f-9c36-1ea7a88fa287",
+				"method": "PUT"
+			},
+			{
+				"id": "9c4ba430-c08d-46f8-a253-1813d04a4b98",
+				"method": "PUT"
+			},
+			{
+				"id": "2ea4b780-d289-4d98-ad95-a32e6320f148",
+				"method": "DELETE"
+			},
+			{
+				"id": "af962e10-ee43-48a5-aab4-ec858f0446a1",
+				"method": "DELETE"
+			},
+			{
+				"id": "066f3739-4327-48ec-b87c-38f5df30b339",
+				"method": "GET"
+			},
+			{
+				"id": "6a870469-c8df-498f-b664-2700b606b310",
+				"method": "POST"
+			},
+			{
+				"id": "d9ef0f2f-5462-4aab-9e77-bdfc44ab5eba",
+				"method": "POST"
+			},
+			{
+				"id": "4017d1fc-55ff-46d9-aa05-8d1c0b216b89",
+				"method": "POST"
+			},
+			{
+				"id": "6c35958e-495f-4d6e-a0ec-8e4e398ff0a1",
+				"method": "POST"
+			},
+			{
+				"id": "f0c41a6a-5abb-430d-8a19-b68afe4777a1",
+				"method": "POST"
+			},
+			{
+				"id": "edcd16eb-8d78-46f8-8ce3-8fa0370f71e7",
+				"method": "GET"
+			},
+			{
+				"id": "a719c595-7013-4a43-bc15-9ed3bdb2ce5b",
+				"method": "GET"
+			},
+			{
+				"id": "9d704189-359d-492e-bac3-fb8f1d351ece",
+				"method": "GET"
+			},
+			{
+				"id": "f843218a-20fb-45fe-8be2-b0437b792319",
+				"method": "POST"
+			},
+			{
+				"id": "2e45d128-509c-49b3-b35f-196f3c02c219",
+				"method": "POST"
+			},
+			{
+				"id": "890d274c-111a-4ff3-9942-b15f7cc2d745",
+				"method": "PUT"
+			},
+			{
+				"id": "bef448dc-7953-4ae1-a328-823e4f2542e3",
+				"method": "PUT"
+			},
+			{
+				"id": "546a623f-d0de-49f1-8c9f-1260814387fc",
+				"method": "PUT"
+			},
+			{
+				"id": "7c0e2ea4-86da-41c7-9eaf-630a05547f1a",
+				"method": "PUT"
+			},
+			{
+				"id": "b322ef77-6027-443f-815d-ed8c8517c671",
+				"method": "DELETE"
+			},
+			{
+				"id": "a5d2e804-0374-4031-a95a-02bb6f66d4f6",
+				"method": "DELETE"
+			}
+		]
+	}
+}
